@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceContent from "../markdown/service.md";
+import { service } from "../data/service";
+---
+
+<BaseLayout
+  title="Service | Chu Chen"
+  description="Academic service, reviewing, and teaching activities by Chu Chen."
+  canonical="https://chuchen.99.github.io/service"
+>
+  <section class="hero">
+    <h1>Service and Teaching</h1>
+    <p class="muted">This page combines a readable summary with data-driven lists for easy updates.</p>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <h2>Organizer</h2>
+      <ul>
+        {service.organizer.map((item) => (
+          <li>
+            <a href={item.link} target="_blank" rel="noopener noreferrer">{item.item}</a>
+          </li>
+        ))}
+      </ul>
+    </article>
+    <article class="card">
+      <h2>Reviewer</h2>
+      <ul>{service.reviewer.map((item) => <li>{item}</li>)}</ul>
+    </article>
+    <article class="card">
+      <h2>Professional Service</h2>
+      <ul>
+        {service.professional.map((item) => (
+          <li>{item.role}, {item.org} ({item.period})</li>
+        ))}
+      </ul>
+    </article>
+    <article class="card">
+      <h2>Teaching</h2>
+      <ul>{service.teaching.map((item) => <li>{item}</li>)}</ul>
+    </article>
+  </section>
+
+  <section>
+    <h2>Markdown Summary</h2>
+    <article class="card">
+      <ServiceContent />
+    </article>
+  </section>
+</BaseLayout>

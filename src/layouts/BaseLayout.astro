@@ -1,0 +1,50 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const { title, description, canonical, jsonLd } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical ?? Astro.url.toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {jsonLd && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/">Chu Chen</a>
+        <nav aria-label="Primary">
+          <a href="/publications">Publications</a>
+          <a href="/cv">CV</a>
+          <a href="/service">Service</a>
+          <a href="https://orcid.org/0000-0002-3055-6988" target="_blank" rel="noopener noreferrer">ORCID</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="container site-footer">
+      <p>© {new Date().getFullYear()} Chu Chen</p>
+    </footer>
+  </body>
+</html>

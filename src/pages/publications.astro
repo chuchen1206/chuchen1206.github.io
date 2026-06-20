@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { publications } from "../data/publications";
+
+const groups = [
+  { key: "journal", label: "Journal" },
+  { key: "conference", label: "Conference" },
+  { key: "preprint", label: "Preprint" },
+  { key: "patent", label: "Patent" }
+] as const;
+
+const jsonLd = publications
+  .filter((item) => item.category !== "patent")
+  .map((item) => ({
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    headline: item.title,
+    author: item.authors.split(";").map((name) => ({ "@type": "Person", name: name.trim() })),
+    datePublished: String(item.year),
+    isPartOf: item.venue,
+    url: item.link ?? "https://chuchen.99.github.io/publications"
+  }));
+---
+
+<BaseLayout
+  title="Publications | Chu Chen"
+  description="Publications, preprints, and patent by Chu Chen."
+  canonical="https://chuchen.99.github.io/publications"
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <h1>Publications</h1>
+    <p class="muted">Journals, conferences, preprints, and patent. Sections are collapsible for easier maintenance and browsing.</p>
+  </section>
+
+  {
+    groups.map((group) => {
+      const items = publications
+        .filter((item) => item.category === group.key)
+        .sort((a, b) => b.year - a.year);
+
+      if (items.length === 0) return null;
+
+      return (
+        <section>
+          <details open>
+            <summary>
+              <h2 style="display:inline">{group.label}</h2>
+            </summary>
+            <div class="grid" style="margin-top: 0.8rem;">
+              {items.map((item) => (
+                <article class="card">
+                  <h3>{item.title}</h3>
+                  <p class="muted">{item.authors}</p>
+                  <p>
+                    {item.venue} ({item.year})
+                  </p>
+                  {item.link && (
+                    <p>
+                      <a href={item.link} target="_blank" rel="noopener noreferrer">
+                        Link
+                      </a>
+                    </p>
+                  )}
+                </article>
+              ))}
+            </div>
+          </details>
+        </section>
+      );
+    })
+  }
+</BaseLayout>

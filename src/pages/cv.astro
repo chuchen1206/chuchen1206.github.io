@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CvContent from "../markdown/cv.md";
+---
+
+<BaseLayout
+  title="CV | Chu Chen"
+  description="Curriculum Vitae of Chu Chen."
+  canonical="https://chuchen.99.github.io/cv"
+>
+  <section class="hero">
+    <h1>Curriculum Vitae</h1>
+    <p class="muted">A concise CV page for quick reading.</p>
+    <p><a href="/files/CV.pdf">Download full CV (PDF)</a></p>
+  </section>
+  <article class="card">
+    <CvContent />
+  </article>
+</BaseLayout>

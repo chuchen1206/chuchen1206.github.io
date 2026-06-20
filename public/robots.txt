@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chuchen.99.github.io/sitemap-index.xml
