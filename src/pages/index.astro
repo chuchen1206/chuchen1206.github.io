@@ -40,19 +40,42 @@ const personJsonLd = {
         <strong>Email:</strong> {profile.emails.join(" | ")}
       </p>
       <p>
-        <a href={profile.links.orcid} target="_blank" rel="noopener noreferrer">ORCID</a> ·
-        <a href={profile.links.scholar} target="_blank" rel="noopener noreferrer"> Google Scholar</a> ·
-        <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer"> LinkedIn</a> ·
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"> GitHub</a>
+        <strong>Address:</strong> {profile.location}
       </p>
+      <ul class="social-links">
+        <li>
+          <a class="social-link-item" href={profile.links.orcid} target="_blank" rel="noopener noreferrer">
+            <img class="social-icon" src="/images/icon-orcid.svg" alt="ORCID logo" />
+            <span>ORCID</span>
+          </a>
+        </li>
+        <li>
+          <a class="social-link-item" href={profile.links.scholar} target="_blank" rel="noopener noreferrer">
+            <img class="social-icon" src="/images/icon-scholar.svg" alt="Google Scholar logo" />
+            <span>Google Scholar</span>
+          </a>
+        </li>
+        <li>
+          <a class="social-link-item" href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">
+            <img class="social-icon" src="/images/icon-linkedin.svg" alt="LinkedIn logo" />
+            <span>LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <a class="social-link-item" href={profile.links.github} target="_blank" rel="noopener noreferrer">
+            <img class="social-icon" src="/images/icon-github.svg" alt="GitHub logo" />
+            <span>GitHub</span>
+          </a>
+        </li>
+      </ul>
       <div class="info-bar">
-        <span class="chip">Medical Imaging</span>
-        <span class="chip">Inverse Problems</span>
-        <span class="chip">Deep Learning</span>
+      <!--  <span class="chip">Medical Imaging</span> -->
+      <!--  <span class="chip">Inverse Problems</span> -->
+      <!--  <span class="chip">Deep Learning</span> -->
       </div>
     </div>
     <div class="hero-visual">
-      <img src="/images/profile-placeholder.svg" alt="Profile placeholder" />
+      <img src="/images/chu.heic" alt="Profile placeholder" />
     </div>
   </section>
 
@@ -64,15 +87,22 @@ const personJsonLd = {
   </section>
 
   <section class="section">
-    <h2>Current and Recent Positions</h2>
+    <h2>Position</h2>
     <div class="grid">
       {
         profile.positions.map((position) => (
-          <article class="card">
+          <article class="card position-card">
             <h3>{position.role}</h3>
+            {position.logo && (
+              <img
+                class="institution-logo"
+                src={position.logo}
+                alt={position.logoAlt ?? `${position.institution} logo`}
+              />
+            )}
             <p class="muted">{position.institution}</p>
-            <p>{position.period}</p>
-            <p>{position.advisor}</p>
+            {position.period && <p>{position.period}</p>}
+            {position.advisor && <p>{position.advisor}</p>}
           </article>
         ))
       }

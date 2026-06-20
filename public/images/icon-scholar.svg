@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Google Scholar</title>
+  <polygon points="32,10 8,22 32,34 56,22" fill="#4285F4"/>
+  <path d="M16 28l16 8 16-8v16c0 8-7 14-16 14s-16-6-16-14V28z" fill="#7BAAF7"/>
+  <rect x="48" y="24" width="4" height="16" fill="#174EA6"/>
+</svg>

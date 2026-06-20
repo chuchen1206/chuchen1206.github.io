@@ -1,10 +1,36 @@
-export const profile = {
+interface Position {
+  role: string;
+  institution: string;
+  address: string;
+  period?: string;
+  advisor?: string;
+  logo?: string;
+  logoAlt?: string;
+}
+
+interface Profile {
+  name: string;
+  title: string;
+  subtitle: string;
+  location: string;
+  tagline: string;
+  emails: string[];
+  links: {
+    orcid: string;
+    linkedin: string;
+    scholar: string;
+    github: string;
+  };
+  researchInterests: string[];
+  positions: Position[];
+}
+
+export const profile: Profile = {
   name: "Chu Chen",
   title: "Postdoctoral Research Fellow",
   subtitle: "University of Cambridge",
-  location: "Cambridge, UK",
-  tagline:
-    "I work on scientific computing, image processing, inverse problems, and deep learning for medical imaging.",
+  location: "Trumpington Street, Cambridge CB2 1PZ, UK",
+  tagline: "",
   emails: ["chuchen4-c@my.cityu.edu.hk", "chucc9912@gmail.com"],
   links: {
     orcid: "https://orcid.org/0000-0002-3055-6988",
@@ -17,21 +43,25 @@ export const profile = {
     "Signal and Image Processing",
     "Inverse Problems",
     "Deep Learning",
-    "Computational Geometry"
+    "Computational Geometry",
+    "Medical Imaging"
   ],
   positions: [
     {
       role: "Postdoctoral Research Fellow",
-      institution: "University of Cambridge",
-      period: "Aug 2026 - Present",
-      advisor: "Prof. Graham Treece"
+      institution: "Division of Information Engineering, Department of Engineering, University of Cambridge",
+      address: "Department of Engineering, University of Cambridge, Trumpington Street, Cambridge CB2 1PZ, UK",
+      logo: "/images/cambridge-logo.webp",
+      logoAlt: "University of Cambridge logo"
+      // period: "Aug 2026 - Present",
+      // advisor: "Prof. Graham Treece"
     },
-    {
-      role: "Ph.D. Student",
-      institution: "City University of Hong Kong",
-      period: "Aug 2022 - Jul 2026",
-      advisor:
-        "Prof. Jean-Michel Morel, Prof. Raymond H. Chan, and Prof. Ronald L.M. Lui"
-    }
+    // {
+    //   role: "Ph.D. Student",
+    //   institution: "City University of Hong Kong",
+    //   period: "Aug 2022 - Jul 2026",
+    //   advisor:
+    //     "Prof. Jean-Michel Morel, Prof. Raymond H. Chan, and Prof. Ronald L.M. Lui"
+    // }
   ]
 };
