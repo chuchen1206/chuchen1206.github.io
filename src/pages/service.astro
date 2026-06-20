@@ -9,12 +9,22 @@ import { service } from "../data/service";
   description="Academic service, reviewing, and teaching activities by Chu Chen."
   canonical="https://chuchen.99.github.io/service"
 >
-  <section class="hero">
-    <h1>Service and Teaching</h1>
-    <p class="muted">This page combines a readable summary with data-driven lists for easy updates.</p>
+  <section class="hero hero-grid">
+    <div>
+      <h1>Service and Teaching</h1>
+      <p class="muted">Academic leadership, reviewing, and teaching activities.</p>
+      <div class="info-bar">
+        <span class="chip">Conference Organizer</span>
+        <span class="chip">Reviewer</span>
+        <span class="chip">Teaching</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="/images/profile-placeholder.svg" alt="Service page placeholder" />
+    </div>
   </section>
 
-  <section class="grid">
+  <section class="grid section">
     <article class="card">
       <h2>Organizer</h2>
       <ul>
@@ -43,7 +53,7 @@ import { service } from "../data/service";
     </article>
   </section>
 
-  <section>
+  <section class="section">
     <h2>Markdown Summary</h2>
     <article class="card">
       <ServiceContent />

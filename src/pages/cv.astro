@@ -8,12 +8,23 @@ import CvContent from "../markdown/cv.md";
   description="Curriculum Vitae of Chu Chen."
   canonical="https://chuchen.99.github.io/cv"
 >
-  <section class="hero">
-    <h1>Curriculum Vitae</h1>
-    <p class="muted">A concise CV page for quick reading.</p>
-    <p><a href="/files/CV.pdf">Download full CV (PDF)</a></p>
+  <section class="hero hero-grid">
+    <div>
+      <h1>Curriculum Vitae</h1>
+      <p class="muted">A concise CV page optimized for readability.</p>
+      <p><a href="/files/CV.pdf">Download full CV (PDF)</a></p>
+      <div class="info-bar">
+        <span class="chip">Education</span>
+        <span class="chip">Research</span>
+        <span class="chip">Honors</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="/images/research-visual-2.svg" alt="CV visual placeholder" />
+    </div>
   </section>
-  <article class="card">
+
+  <article class="card section">
     <CvContent />
   </article>
 </BaseLayout>

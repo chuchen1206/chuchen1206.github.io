@@ -28,9 +28,19 @@ const jsonLd = publications
   canonical="https://chuchen.99.github.io/publications"
   jsonLd={jsonLd}
 >
-  <section class="hero">
-    <h1>Publications</h1>
-    <p class="muted">Journals, conferences, preprints, and patent. Sections are collapsible for easier maintenance and browsing.</p>
+  <section class="hero hero-grid">
+    <div>
+      <h1>Publications</h1>
+      <p class="muted">Journals, conferences, preprints, and patent. Each section is collapsible for readability.</p>
+      <div class="info-bar">
+        <span class="chip">Grouped by type</span>
+        <span class="chip">Recent first</span>
+        <span class="chip">Link-ready entries</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="/images/research-visual-1.svg" alt="Publications visual placeholder" />
+    </div>
   </section>
 
   {
@@ -42,23 +52,24 @@ const jsonLd = publications
       if (items.length === 0) return null;
 
       return (
-        <section>
+        <section class="section">
           <details open>
-            <summary>
-              <h2 style="display:inline">{group.label}</h2>
+            <summary class="summary-title">
+              <h2>{group.label}</h2>
+              <span class="summary-count">{items.length} items</span>
             </summary>
-            <div class="grid" style="margin-top: 0.8rem;">
+            <div class="pub-list" style="margin-top: 0.9rem;">
               {items.map((item) => (
-                <article class="card">
+                <article class="card pub-card">
                   <h3>{item.title}</h3>
                   <p class="muted">{item.authors}</p>
                   <p>
-                    {item.venue} ({item.year})
+                    {item.venue} ({item.year}) <span class="badge">{item.category}</span>
                   </p>
                   {item.link && (
                     <p>
                       <a href={item.link} target="_blank" rel="noopener noreferrer">
-                        Link
+                        Read online
                       </a>
                     </p>
                   )}

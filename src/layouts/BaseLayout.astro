@@ -29,6 +29,8 @@ const { title, description, canonical, jsonLd } = Astro.props;
     )}
   </head>
   <body>
+    <div aria-hidden="true" class="bg-orb bg-orb-left"></div>
+    <div aria-hidden="true" class="bg-orb bg-orb-right"></div>
     <header class="site-header">
       <div class="container nav-wrap">
         <a class="brand" href="/">Chu Chen</a>
@@ -44,7 +46,7 @@ const { title, description, canonical, jsonLd } = Astro.props;
       <slot />
     </main>
     <footer class="container site-footer">
-      <p>© {new Date().getFullYear()} Chu Chen</p>
+      <p>© {new Date().getFullYear()} Chu Chen · Crafted with Astro</p>
     </footer>
   </body>
 </html>

@@ -1,0 +1,15 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#202251"/>
+      <stop offset="100%" stop-color="#43337e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#g2)"/>
+  <rect x="120" y="140" width="430" height="270" rx="24" fill="#9fbcff" fill-opacity="0.22"/>
+  <rect x="650" y="180" width="430" height="430" rx="24" fill="#b29eff" fill-opacity="0.2"/>
+  <rect x="140" y="460" width="390" height="150" rx="20" fill="#85dcff" fill-opacity="0.2"/>
+  <text x="600" y="700" font-size="42" text-anchor="middle" fill="#eef2ff" font-family="Arial, Helvetica, sans-serif">
+    Replace with lab / conference / visualization image
+  </text>
+</svg>
