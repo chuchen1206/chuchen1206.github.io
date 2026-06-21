@@ -31,7 +31,7 @@ export const profile: Profile = {
   subtitle: "University of Cambridge",
   location: "Trumpington Street, Cambridge CB2 1PZ, UK",
   tagline: "",
-  emails: ["chuchen4-c@my.cityu.edu.hk", "chucc9912@gmail.com"],
+  emails: ["chucc9912@gmail.com"],
   links: {
     orcid: "https://orcid.org/0000-0002-3055-6988",
     linkedin: "https://www.linkedin.com/in/chuchen99/",
