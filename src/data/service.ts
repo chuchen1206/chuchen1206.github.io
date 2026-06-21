@@ -8,7 +8,7 @@ export const service = {
   reviewer: [
     "IEEE Internet of Things Journal",
     "Neural Networks",
-    "MICCAI"
+    "Medical Image Computing and Computer Assisted Intervention (MICCAI)"
   ],
   professional: [
     {
@@ -23,8 +23,8 @@ export const service = {
     "MA1508 Calculus (SemA 2024/2025)"
   ],
   talks: [
-    "MICCAI 2025, Daejeon, South Korea",
+    "Medical Image Computing and Computer Assisted Intervention (MICCAI) 2025, Daejeon, South Korea",
     "Mathematics of Imaging: Trends and Perspectives 2025, Marseille, France",
-    "IEEE ISBI 2024, Athens, Greece"
+    "IEEE International Symposium on Biomedical Imaging (ISBI) 2024, Athens, Greece"
   ]
 };

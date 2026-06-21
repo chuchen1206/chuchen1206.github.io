@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { publications } from "../data/publications";
+import { profile } from "../data/profile";
 
 const groups = [
   { key: "journal", label: "Journal" },
@@ -18,29 +19,39 @@ const jsonLd = publications
     author: item.authors.split(";").map((name) => ({ "@type": "Person", name: name.trim() })),
     datePublished: String(item.year),
     isPartOf: item.venue,
-    url: item.link ?? "https://chuchen.99.github.io/publications"
+    url: item.link ?? "https://chuchen1206.github.io/publications"
   }));
 ---
 
 <BaseLayout
   title="Publications | Chu Chen"
   description="Publications, preprints, and patent by Chu Chen."
-  canonical="https://chuchen.99.github.io/publications"
+  canonical="https://chuchen1206.github.io/publications"
   jsonLd={jsonLd}
 >
   <section class="hero hero-grid">
     <div>
       <h1>Publications</h1>
-      <p class="muted">Journals, conferences, preprints, and patent. Each section is collapsible for readability.</p>
-      <div class="info-bar">
+      <p class="muted">👇 find the most up-to-date publication list </p>
+      <p class="pub-links">
+        <a href={profile.links.scholar} target="_blank" rel="noopener noreferrer">
+          <img
+            class="social-icon"
+            src="/images/icon-scholar.svg"
+            alt="Google Scholar logo"
+          />
+          <span>Google Scholar Profile</span>
+        </a>
+      </p>
+      <!-- <div class="info-bar">
         <span class="chip">Grouped by type</span>
         <span class="chip">Recent first</span>
         <span class="chip">Link-ready entries</span>
-      </div>
+      </div> -->
     </div>
-    <div class="hero-visual">
+    <!-- <div class="hero-visual">
       <img src="/images/research-visual-1.svg" alt="Publications visual placeholder" />
-    </div>
+    </div> -->
   </section>
 
   {
@@ -66,13 +77,13 @@ const jsonLd = publications
                   <p>
                     {item.venue} ({item.year}) <span class="badge">{item.category}</span>
                   </p>
-                  {item.link && (
-                    <p>
+                  <p class="pub-links">
+                    {item.link && (
                       <a href={item.link} target="_blank" rel="noopener noreferrer">
-                        Read online
+                        Paper
                       </a>
-                    </p>
-                  )}
+                    )}
+                  </p>
                 </article>
               ))}
             </div>

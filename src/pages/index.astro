@@ -3,10 +3,56 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { profile } from "../data/profile";
 import { publications } from "../data/publications";
 
+const isFirstAuthor = (authors: string) => {
+  const first = authors.split(";")[0]?.trim().toLowerCase() ?? "";
+  return (
+    first.includes("chu chen") ||
+    first.includes("chen, chu")
+  );
+};
 const featured = publications
   .filter((item) => item.category !== "patent")
+  .filter((item) => isFirstAuthor(item.authors))
   .sort((a, b) => b.year - a.year)
   .slice(0, 3);
+
+const highlightImages = [
+  {
+    src: "/images/visit_damtp.HEIC",
+    alt: "visit to DAMTP",
+    caption: "Visit to DAMTP, University of Cambridge"
+  },
+  {
+    src: "/images/LINR_feature_TBME.jpeg",
+    alt: "feature article of TBME",
+    caption: "LINR has been selected as feature article of TBME! Congrats! 🚀"
+  },
+  {
+    src: "/images/marseille.HEIC",
+    alt: "Talk in Marseille",
+    caption: "Mathematics of Imaging: Trends and Perspectives, Marseille, France (2025)"
+  },
+  {
+    src: "/images/MICCAI2025.heic",
+    alt: "MICCAI 2025 moment",
+    caption: "MICCAI 2025, Daejeon, South Korea"
+  },
+  {
+    src: "/images/visit_piccolomini&pasquale.heic",
+    alt: "visit prof piccolomini and pasquale at uni bologna",
+    caption: "Visit Prof. Piccolomini and Pasquale, University of Bologna, Italy"
+  },
+  {
+    src: "/images/varlab_bologna.jpg",
+    alt: "visit pasquale's varlab at uni bologna",
+    caption: "Visit VARLAB, University of Bologna, Italy"
+  },
+  {
+    src: "/images/ISBI2024.JPG",
+    alt: "ISBI2024 moment",
+    caption: "ISBI2024, Athens, Greece"
+  }
+];
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -15,7 +61,7 @@ const personJsonLd = {
   jobTitle: profile.title,
   worksFor: { "@type": "Organization", name: profile.subtitle },
   email: `mailto:${profile.emails[0]}`,
-  url: "https://chuchen.99.github.io",
+  url: "https://chuchen1206.github.io",
   sameAs: [
     profile.links.orcid,
     profile.links.linkedin,
@@ -28,7 +74,7 @@ const personJsonLd = {
 <BaseLayout
   title="Chu Chen | Academic Homepage"
   description="Academic homepage of Chu Chen: research in scientific computing, inverse problems, and medical imaging."
-  canonical="https://chuchen.99.github.io/"
+  canonical="https://chuchen1206.github.io/"
   jsonLd={personJsonLd}
 >
   <section class="hero hero-grid">
@@ -131,10 +177,89 @@ const personJsonLd = {
 
   <section class="section">
     <h2>Research Visual Highlights</h2>
-    <p class="muted">Use these placeholders for your project figures, conference photos, or lab snapshots.</p>
-    <div class="gallery">
-      <img src="/images/research-visual-1.svg" alt="Research figure placeholder 1" />
-      <img src="/images/research-visual-2.svg" alt="Research figure placeholder 2" />
+    <p class="muted">Conference moments and research snapshots.</p>
+    <div class="gallery-shell">
+      <button class="gallery-nav gallery-nav-left" type="button" aria-label="Scroll left" data-gallery-prev>
+        ‹
+      </button>
+      <div class="gallery-track-wrap">
+        <div class="gallery-track" data-gallery-track>
+          {
+            highlightImages.map((item) => (
+              <figure class="gallery-item card">
+                <div class="gallery-media">
+                  <img src={item.src} alt={item.alt} />
+                </div>
+                <figcaption class="gallery-caption">{item.caption}</figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+      <button class="gallery-nav gallery-nav-right" type="button" aria-label="Scroll right" data-gallery-next>
+        ›
+      </button>
     </div>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  const track = document.querySelector("[data-gallery-track]");
+  const trackWrap = document.querySelector(".gallery-track-wrap");
+  const prevButton = document.querySelector("[data-gallery-prev]");
+  const nextButton = document.querySelector("[data-gallery-next]");
+
+  if (track && trackWrap && prevButton && nextButton) {
+    const getStep = () => Math.max(track.clientWidth * 0.82, 320);
+    const mediaBoxes = Array.from(track.querySelectorAll(".gallery-media"));
+    const images = Array.from(track.querySelectorAll(".gallery-media img"));
+
+    const updateGalleryHeight = () => {
+      let maxHeight = 0;
+
+      mediaBoxes.forEach((box, index) => {
+        const image = images[index];
+        if (!image || !image.naturalWidth || !image.naturalHeight) return;
+        const renderedHeight = (box.clientWidth * image.naturalHeight) / image.naturalWidth;
+        if (renderedHeight > maxHeight) maxHeight = renderedHeight;
+      });
+
+      if (maxHeight > 0) {
+        track.style.setProperty("--gallery-max-height", `${Math.ceil(maxHeight)}px`);
+      }
+    };
+
+    const updateFadeState = () => {
+      const maxScrollLeft = track.scrollWidth - track.clientWidth;
+      const atLeft = track.scrollLeft <= 1;
+      const atRight = track.scrollLeft >= maxScrollLeft - 1;
+
+      trackWrap.classList.toggle("is-left-fade", !atLeft);
+      trackWrap.classList.toggle("is-right-fade", !atRight);
+    };
+
+    prevButton.addEventListener("click", () => {
+      track.scrollBy({ left: -getStep(), behavior: "smooth" });
+    });
+
+    nextButton.addEventListener("click", () => {
+      track.scrollBy({ left: getStep(), behavior: "smooth" });
+    });
+    track.addEventListener("scroll", updateFadeState);
+
+    images.forEach((image) => {
+      if (image.complete) return;
+      image.addEventListener("load", updateGalleryHeight, { once: true });
+    });
+
+    window.addEventListener("resize", () => {
+      updateGalleryHeight();
+      updateFadeState();
+    });
+
+    requestAnimationFrame(() => {
+      updateGalleryHeight();
+      updateFadeState();
+    });
+  }
+</script>

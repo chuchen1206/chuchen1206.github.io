@@ -42,7 +42,7 @@ Core page files:
 
 ## 4) Deploy to GitHub Pages
 
-1. Create repository: `chuchen.99.github.io`
+1. Create repository: `chuchen1206.github.io`
 2. Push this project to branch `main`
 3. In GitHub repo settings:
    - `Pages -> Source`: `GitHub Actions`
@@ -60,7 +60,7 @@ Already configured:
 
 After first deployment:
 
-1. Submit `https://chuchen.99.github.io/sitemap-index.xml` to:
+1. Submit `https://chuchen1206.github.io/sitemap-index.xml` to:
    - Google Search Console
    - Bing Webmaster Tools
 2. Add site link back from:

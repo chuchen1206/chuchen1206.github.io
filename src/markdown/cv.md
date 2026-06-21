@@ -10,13 +10,13 @@ title: CV
 
 ## Research Experience
 
-- **Postdoctoral Research Fellow**, University of Cambridge (Aug 2026 - Present)  
+- **Postdoctoral Research Fellow**, Department of Engineering, University of Cambridge (Aug 2026 - Present)  
   Supervisor: Prof. Graham Treece
 
-- **Visiting Ph.D. Student**, University of Cambridge, DAMTP (May 2025 - Nov 2025)  
+- **Visiting Ph.D. Student**, DAMTP, University of Cambridge (May 2025 - Nov 2025)  
   Supervisor: Prof. Carola-Bibiane Schönlieb
 
-## Affiliation
+## Other Affiliations
 
 - Hong Kong Centre for Cerebro-cardiovascular Health Engineering (Aug 2022 - Jul 2026)  
   Projects: MRI, Ultrasound
