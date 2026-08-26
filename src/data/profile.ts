@@ -29,7 +29,7 @@ export const profile: Profile = {
   name: "Chu Chen",
   title: "Postdoctoral Research Fellow",
   subtitle: "University of Cambridge",
-  location: "Trumpington Street, Cambridge CB2 1PZ, UK",
+  location: "BN4-70, Department of Engineering, Trumpington Street, Cambridge CB2 1PZ, UK",
   tagline: "",
   emails: ["cc2331@cam.ac.uk"],
   links: {
