@@ -1,0 +1,93 @@
+---
+import Icons from "./Icons.astro";
+import { profile } from "../data/profile";
+
+const year = new Date().getFullYear();
+const links = [
+  { name: "university", label: "Department of Engineering profile", href: profile.links.department },
+  { name: "scholar", label: "Google Scholar", href: profile.links.scholar },
+  { name: "orcid", label: "ORCID", href: profile.links.orcid },
+  { name: "github", label: "GitHub", href: profile.links.github },
+  { name: "linkedin", label: "LinkedIn", href: profile.links.linkedin }
+] as const;
+---
+
+<footer class="footer">
+  <svg class="footer-tiles" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="azulejo" width="44" height="44" patternUnits="userSpaceOnUse">
+        <g fill="none" stroke="currentColor" stroke-width="1.1">
+          <path d="M0 13 A13 13 0 0 0 13 0 M31 0 A13 13 0 0 0 44 13 M44 31 A13 13 0 0 0 31 44 M13 44 A13 13 0 0 0 0 31"
+          ></path>
+          <circle cx="22" cy="15.5" r="6.5"></circle>
+          <circle cx="22" cy="28.5" r="6.5"></circle>
+          <circle cx="15.5" cy="22" r="6.5"></circle>
+          <circle cx="28.5" cy="22" r="6.5"></circle>
+        </g>
+        <path d="M22 19 L25 22 L22 25 L19 22 Z" fill="currentColor"></path>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#azulejo)"></rect>
+  </svg>
+  <div class="wrap footer-inner">
+    <p>© {year} {profile.name} · {profile.city}</p>
+    <ul class="footer-links">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+              <Icons name={link.name} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--bg-alt);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .footer-tiles {
+    display: block;
+    width: 100%;
+    height: 44px;
+    color: var(--accent);
+    opacity: 0.22;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.4rem;
+    padding-bottom: 2rem;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.1rem;
+  }
+
+  .footer-links a {
+    display: block;
+    color: var(--muted);
+    transition: color 200ms var(--ease);
+  }
+
+  .footer-links a:hover {
+    color: var(--text);
+  }
+
+  .footer-links :global(svg) {
+    width: 17px;
+    height: 17px;
+  }
+</style>

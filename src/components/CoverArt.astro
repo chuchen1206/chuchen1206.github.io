@@ -1,0 +1,180 @@
+---
+import type { Palette, ThemeKey } from "../data/profile";
+
+interface Props {
+  theme: ThemeKey;
+  palette: Palette;
+  seed?: number;
+  label?: string;
+  meta?: string;
+  class?: string;
+}
+
+const { theme, palette, seed = 1, label, meta, class: className } = Astro.props;
+
+let state = (seed * 9301 + 49297) % 233280;
+const rand = (min: number, max: number) => {
+  state = (state * 9301 + 49297) % 233280;
+  return min + (state / 233280) * (max - min);
+};
+
+const labelColor = theme === "inverse" ? palette.ink : palette.primary;
+const hasLabel = Boolean(label);
+const lift = hasLabel ? 0 : 20;
+const top = hasLabel ? 0 : 28;
+
+const cell = 34;
+const gridRows = hasLabel ? 5 : 7;
+const gridTop = hasLabel ? 30 : 30 + top / 2;
+const samples = Array.from({ length: gridRows * 8 }, (_, i) => {
+  const roll = rand(0, 1);
+  return {
+    x: 14 + (i % 8) * cell,
+    y: gridTop + Math.floor(i / 8) * cell,
+    kind: roll < 0.2 ? "fill" : roll < 0.3 ? "ring" : roll < 0.36 ? "accent" : "dot"
+  };
+});
+const scanY = gridTop + Math.floor(rand(1, gridRows - 1)) * cell + cell / 2 - 1;
+
+const ringX = rand(140, 190);
+const ringY = 118 + lift / 2;
+const dotAngle = rand(-0.25, 0.25) * Math.PI;
+const dotRing = 70;
+const barX = rand(28, 48);
+
+const arcBands = [palette.primary, palette.secondary, palette.ink];
+const arcBase = rand(70, 92);
+const arcStep = 26;
+const arcOriginY = 210 + lift;
+const pebbleX = rand(200, 248);
+const pebbleY = rand(56, 90) + top;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 300 300"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <rect width="300" height="300" fill={palette.bg}></rect>
+
+  {
+    theme === "inverse" && (
+      <g>
+        {samples.map((s) =>
+          s.kind === "fill" ? (
+            <rect x={s.x + 3} y={s.y + 3} width={cell - 6} height={cell - 6} rx="3" fill={palette.primary} />
+          ) : s.kind === "ring" ? (
+            <rect
+              x={s.x + 4}
+              y={s.y + 4}
+              width={cell - 8}
+              height={cell - 8}
+              rx="3"
+              fill="none"
+              stroke={palette.ink}
+              stroke-width="1.6"
+            />
+          ) : s.kind === "accent" ? (
+            <rect x={s.x + 3} y={s.y + 3} width={cell - 6} height={cell - 6} rx="3" fill={palette.secondary} />
+          ) : (
+            <circle cx={s.x + cell / 2} cy={s.y + cell / 2} r="1.8" fill={palette.ink} opacity="0.45" />
+          )
+        )}
+        <line x1="0" x2="300" y1={scanY} y2={scanY} stroke={palette.ink} stroke-width="1.4" opacity="0.7" />
+      </g>
+    )
+  }
+
+  {
+    theme === "imaging" && (
+      <g>
+        <rect x={barX} y="24" width="14" height={hasLabel ? 168 : 230} fill={palette.ink} />
+        {[22, 44, 66, 88, 110].map((r, i) => (
+          <circle
+            cx={ringX}
+            cy={ringY}
+            r={r}
+            fill="none"
+            stroke={palette.primary}
+            stroke-width="2"
+            opacity={1 - i * 0.17}
+          />
+        ))}
+        <circle
+          cx={ringX + Math.cos(dotAngle) * dotRing}
+          cy={ringY + Math.sin(dotAngle) * dotRing}
+          r="15"
+          fill={palette.secondary}
+        />
+      </g>
+    )
+  }
+
+  {
+    theme === "geometry" && (
+      <g>
+        {arcBands.map((color, i) => (
+          <path
+            d={`M 0 ${arcOriginY - (arcBase + (2 - i) * arcStep)} A ${arcBase + (2 - i) * arcStep} ${
+              arcBase + (2 - i) * arcStep
+            } 0 0 1 ${arcBase + (2 - i) * arcStep} ${arcOriginY} L 0 ${arcOriginY} Z`}
+            fill={color}
+          />
+        ))}
+        <path
+          d={`M 0 ${arcOriginY - arcBase + arcStep} A ${arcBase - arcStep} ${arcBase - arcStep} 0 0 1 ${
+            arcBase - arcStep
+          } ${arcOriginY} L 0 ${arcOriginY} Z`}
+          fill={palette.bg}
+        />
+        <circle cx={pebbleX} cy={pebbleY} r="20" fill="none" stroke={palette.primary} stroke-width="2" />
+        <circle cx={pebbleX} cy={pebbleY} r="6" fill={palette.secondary} />
+        {[0, 1, 2, 3].map((i) => (
+          <line
+            x1={170 + i * 22}
+            x2={170 + i * 22}
+            y1={arcOriginY - 70}
+            y2={arcOriginY}
+            stroke={palette.ink}
+            stroke-width="1.4"
+            opacity={0.5 + i * 0.15}
+          />
+        ))}
+      </g>
+    )
+  }
+
+  {
+    meta && (
+      <text
+        x="16"
+        y="26"
+        fill={labelColor}
+        opacity="0.75"
+        font-family="ui-monospace, SF Mono, Menlo, monospace"
+        font-size="11"
+        letter-spacing="1"
+      >
+        {meta}
+      </text>
+    )
+  }
+
+  {
+    hasLabel && (
+      <text
+        x="-6"
+        y="292"
+        fill={labelColor}
+        font-family="-apple-system, BlinkMacSystemFont, SF Pro Display, Helvetica Neue, sans-serif"
+        font-size="88"
+        font-weight="800"
+        letter-spacing="-4"
+      >
+        {label}
+      </text>
+    )
+  }
+</svg>

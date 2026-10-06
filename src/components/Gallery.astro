@@ -1,0 +1,47 @@
+---
+import Icons from "./Icons.astro";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="gallery" data-gallery>
+  <div class="scroller" data-gallery-track role="region" aria-label={label} tabindex="0">
+    <slot />
+  </div>
+  <div class="wrap">
+    <div class="scroller-controls">
+      <button class="round-btn" type="button" aria-label="Previous" data-gallery-prev>
+        <Icons name="arrow-left" />
+      </button>
+      <button class="round-btn" type="button" aria-label="Next" data-gallery-next>
+        <Icons name="arrow-right" />
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((root) => {
+    const track = root.querySelector<HTMLElement>("[data-gallery-track]");
+    const prev = root.querySelector<HTMLButtonElement>("[data-gallery-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-gallery-next]");
+    if (!track || !prev || !next) return;
+
+    const step = () => Math.max(track.clientWidth * 0.75, 280);
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max - 2;
+    };
+
+    prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+    next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  });
+</script>

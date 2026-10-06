@@ -12,9 +12,10 @@
 
 ### B. Position or service update
 
-1. Edit `src/data/profile.ts` and/or `src/data/service.ts`
-2. If narrative changed, update `src/content/cv.md` or `src/content/service.md`
-3. Commit and push
+1. Edit `src/data/profile.ts` and/or `src/data/service.ts` (homepage and CV page update together)
+2. For new photos, add a resized image under `public/images/web/` and an entry in `src/data/gallery.ts` (include the pixel `width` and `height`, e.g. from `sips -g pixelWidth -g pixelHeight`, so the photo is shown uncropped)
+3. Institution logos live in `public/images/logos/` and are referenced by the `logo` field of timeline entries
+4. Commit and push
 
 ### C. CV PDF update
 

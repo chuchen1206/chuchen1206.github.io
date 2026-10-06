@@ -8,7 +8,8 @@ export const service = {
   reviewer: [
     "IEEE Internet of Things Journal",
     "Neural Networks",
-    "Medical Image Computing and Computer Assisted Intervention (MICCAI)"
+    "International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI)",
+    "European Conference on Computer Vision (ECCV)",
   ],
   professional: [
     {

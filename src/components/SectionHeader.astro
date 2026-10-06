@@ -1,0 +1,36 @@
+---
+interface Props {
+  side?: string;
+  eyebrow: string;
+  title?: string;
+  lede?: string;
+  center?: boolean;
+}
+
+const { side, eyebrow, title, lede, center = false } = Astro.props;
+---
+
+<div class:list={["section-header", { center }]} data-reveal>
+  <p class="eyebrow">
+    {side && <span class="side">{side}</span>}
+    <span>{eyebrow}</span>
+  </p>
+  {title && <h2 class="headline">{title}</h2>}
+  {lede && <p class="lede">{lede}</p>}
+  <slot />
+</div>
+
+<style>
+  .section-header {
+    display: grid;
+    gap: 1rem;
+    max-width: 46rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .section-header.center {
+    margin-inline: auto;
+    text-align: center;
+    justify-items: center;
+  }
+</style>

@@ -1,14 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { publications } from "../data/publications";
+import PubCard from "../components/PubCard.astro";
+import Icons from "../components/Icons.astro";
+import { publications, byYearDesc, type PublicationCategory } from "../data/publications";
 import { profile } from "../data/profile";
 
-const groups = [
+const filters: { key: "all" | PublicationCategory; label: string }[] = [
+  { key: "all", label: "All" },
   { key: "journal", label: "Journal" },
   { key: "conference", label: "Conference" },
   { key: "preprint", label: "Preprint" },
   { key: "patent", label: "Patent" }
-] as const;
+];
+
+const counts = Object.fromEntries(
+  filters.map((f) => [
+    f.key,
+    f.key === "all" ? publications.length : publications.filter((p) => p.category === f.key).length
+  ])
+);
+
+const sorted = [...publications].sort(byYearDesc);
+const years = [...new Set(sorted.map((p) => p.year))];
+const numbered = sorted.map((pub, i) => ({ pub, number: i + 1 }));
 
 const jsonLd = publications
   .filter((item) => item.category !== "patent")
@@ -25,71 +39,214 @@ const jsonLd = publications
 
 <BaseLayout
   title="Publications | Chu Chen"
-  description="Publications, preprints, and patent by Chu Chen."
+  description="Journal articles, conference papers, preprints and patents by Chu Chen."
   canonical="https://chuchen1206.github.io/publications"
+  page="publications"
   jsonLd={jsonLd}
 >
-  <section class="hero hero-grid">
-    <div>
-      <h1>Publications</h1>
-      <p class="muted">👇 find the most up-to-date publication list </p>
-      <p class="pub-links">
-        <a href={profile.links.scholar} target="_blank" rel="noopener noreferrer">
-          <img
-            class="social-icon"
-            src="/images/icon-scholar.svg"
-            alt="Google Scholar logo"
-          />
-          <span>Google Scholar Profile</span>
-        </a>
+  <section class="band pubs-hero">
+    <div class="wrap wrap-narrow">
+      <p class="eyebrow" data-reveal><span class="side">Tracklist</span><span>Publications</span></p>
+      <h1 class="display pubs-title" data-reveal style="--reveal-delay: 80ms">Publications<span class="dot">.</span></h1>
+      <p class="lede" data-reveal style="--reveal-delay: 160ms">
+        Journal articles, conference papers, preprints and patents, newest first.
       </p>
-      <!-- <div class="info-bar">
-        <span class="chip">Grouped by type</span>
-        <span class="chip">Recent first</span>
-        <span class="chip">Link-ready entries</span>
-      </div> -->
+      <div class="pubs-links" data-reveal style="--reveal-delay: 220ms">
+        <a class="btn btn--ghost" href={profile.links.scholar} target="_blank" rel="noopener noreferrer">
+          <Icons name="scholar" /> Google Scholar
+        </a>
+        <a class="more" href={profile.links.orcid} target="_blank" rel="noopener noreferrer">ORCID</a>
+      </div>
     </div>
-    <!-- <div class="hero-visual">
-      <img src="/images/research-visual-1.svg" alt="Publications visual placeholder" />
-    </div> -->
   </section>
 
-  {
-    groups.map((group) => {
-      const items = publications
-        .filter((item) => item.category === group.key)
-        .sort((a, b) => b.year - a.year);
+  <section class="band pubs-list">
+    <div class="wrap wrap-narrow">
+      <div class="filter-bar">
+      <div class="segmented" role="tablist" aria-label="Filter by type" data-filters>
+        {
+          filters.map((f, i) => (
+            <button
+              type="button"
+              role="tab"
+              aria-selected={i === 0 ? "true" : "false"}
+              data-filter={f.key}
+              class:list={[{ "is-active": i === 0 }]}
+            >
+              {f.label}
+              <span class="segmented-count mono">{counts[f.key]}</span>
+            </button>
+          ))
+        }
+      </div>
+      </div>
 
-      if (items.length === 0) return null;
-
-      return (
-        <section class="section">
-          <details open>
-            <summary class="summary-title">
-              <h2>{group.label}</h2>
-              <span class="summary-count">{items.length} items</span>
-            </summary>
-            <div class="pub-list" style="margin-top: 0.9rem;">
-              {items.map((item) => (
-                <article class="card pub-card">
-                  <h3>{item.title}</h3>
-                  <p class="muted">{item.authors}</p>
-                  <p>
-                    {item.venue} ({item.year}) <span class="badge">{item.category}</span>
-                  </p>
-                  <p class="pub-links">
-                    {item.link && (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer">
-                        Paper
-                      </a>
-                    )}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </details>
-        </section>
-      );
-    })
-  }
+      {
+        years.map((year) => (
+          <section class="year-group" data-year-group>
+            <h2 class="year-label mono">{year}</h2>
+            <ol class="tracks">
+              {numbered
+                .filter(({ pub }) => pub.year === year)
+                .map(({ pub, number }) => (
+                  <PubCard pub={pub} number={number} />
+                ))}
+            </ol>
+          </section>
+        ))
+      }
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .pubs-hero {
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .pubs-hero .wrap {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .pubs-title .dot {
+    color: var(--accent);
+  }
+
+  .pubs-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .pubs-list {
+    padding-top: 0;
+  }
+
+  .filter-bar {
+    position: sticky;
+    top: calc(var(--nav-h) + 22px);
+    z-index: 5;
+    display: flex;
+    margin-bottom: 2.5rem;
+    pointer-events: none;
+  }
+
+  .segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px;
+    pointer-events: auto;
+    border-radius: 999px;
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-rim), 0 0 0 0.5px var(--glass-edge), var(--glass-shadow);
+  }
+
+  .segmented button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 200ms var(--ease), color 200ms var(--ease);
+  }
+
+  .segmented button:hover {
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+  }
+
+  .segmented button.is-active {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow:
+      inset 0 1px 0.5px rgba(255, 255, 255, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+      0 6px 16px -8px color-mix(in srgb, var(--accent) 80%, transparent);
+  }
+
+  .segmented-count {
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .year-group {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 0 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .year-group[hidden] {
+    display: none;
+  }
+
+  .year-label {
+    position: sticky;
+    top: calc(var(--nav-h) + 90px);
+    align-self: start;
+    padding-top: 1.45rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .tracks {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 720px) {
+    .year-group {
+      grid-template-columns: 1fr;
+    }
+
+    .year-label {
+      position: static;
+      padding-top: 0.5rem;
+      padding-bottom: 0.25rem;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-filters]");
+  const buttons = Array.from(root?.querySelectorAll<HTMLButtonElement>("[data-filter]") ?? []);
+  const tracks = Array.from(document.querySelectorAll<HTMLElement>("[data-track]"));
+  const groups = Array.from(document.querySelectorAll<HTMLElement>("[data-year-group]"));
+
+  const apply = (key: string) => {
+    let n = 0;
+    tracks.forEach((track) => {
+      const show = key === "all" || track.dataset.category === key;
+      track.hidden = !show;
+      if (show) {
+        n += 1;
+        const no = track.querySelector("[data-track-no]");
+        if (no) no.textContent = String(n).padStart(2, "0");
+      }
+    });
+    groups.forEach((group) => {
+      group.hidden = !group.querySelector("[data-track]:not([hidden])");
+    });
+    buttons.forEach((btn) => {
+      const active = btn.dataset.filter === key;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-selected", String(active));
+    });
+  };
+
+  buttons.forEach((btn) => btn.addEventListener("click", () => apply(btn.dataset.filter ?? "all")));
+</script>

@@ -1,0 +1,119 @@
+---
+import { isSelf, splitAuthors, type Publication } from "../data/publications";
+
+interface Props {
+  pub: Publication;
+  number: number;
+}
+
+const { pub, number } = Astro.props;
+const authors = splitAuthors(pub.authors);
+const prefix = /^Inventors:/i.test(pub.authors) ? "Inventors: " : "";
+---
+
+<li class="track" data-track data-category={pub.category}>
+  <span class="track-no mono" data-track-no>{String(number).padStart(2, "0")}</span>
+  <div class="track-main">
+    <h3 class="track-title">
+      {
+        pub.link ? (
+          <a href={pub.link} target="_blank" rel="noopener noreferrer">
+            {pub.title}
+          </a>
+        ) : (
+          pub.title
+        )
+      }
+    </h3>
+    <p class="track-authors">
+      {prefix}{authors.map((name, i) => <>{isSelf(name) ? <strong>{name}</strong> : name}{i < authors.length - 1 ? ", " : ""}</>)}
+    </p>
+    <p class="track-venue">
+      {!pub.venue.startsWith(pub.venueShort) && <span class="pill">{pub.venueShort}</span>}
+      <span>{pub.venue}</span>
+      {pub.highlight && <span class="pill pill--warm">{pub.highlight}</span>}
+    </p>
+  </div>
+  <span class="track-year mono">{pub.year}</span>
+</li>
+
+<style>
+  .track {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 0 1.25rem;
+    align-items: baseline;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .track[hidden] {
+    display: none;
+  }
+
+  .track-no {
+    font-size: 0.95rem;
+    color: var(--faint);
+  }
+
+  .track:hover .track-no {
+    color: var(--accent);
+  }
+
+  .track-main {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .track-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.018em;
+  }
+
+  .track-title a {
+    color: var(--text);
+  }
+
+  .track-title a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .track-authors {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .track-authors strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .track-venue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+
+  .track-year {
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .track {
+      grid-template-columns: 2.2rem 1fr;
+    }
+
+    .track-year {
+      display: none;
+    }
+  }
+</style>

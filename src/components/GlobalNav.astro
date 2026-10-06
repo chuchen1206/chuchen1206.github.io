@@ -1,0 +1,293 @@
+---
+import type { PageKey } from "./types";
+
+interface Props {
+  page: PageKey;
+}
+
+const { page } = Astro.props;
+
+const items = [
+  { label: "Research", href: "/#research", section: "research" },
+  { label: "Publications", href: "/publications", page: "publications" },
+  { label: "Experience", href: "/#experience", section: "experience" },
+  { label: "Service", href: "/#service", section: "service" },
+  { label: "Moments", href: "/#moments", section: "moments" },
+  { label: "CV", href: "/cv", page: "cv" }
+];
+---
+
+<header class="gnav" data-gnav>
+  <div class="gnav-inner glass">
+    <a class="gnav-brand" href="/" aria-label="Chu Chen, home">
+      <span class="gnav-mark" aria-hidden="true"></span>
+      Chu Chen
+    </a>
+    <button
+      class="gnav-toggle"
+      type="button"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="gnav-menu"
+      data-gnav-toggle
+    >
+      <span></span><span></span>
+    </button>
+    <nav id="gnav-menu" class="gnav-menu" aria-label="Primary">
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            data-section={item.section}
+            class:list={[{ "is-active": item.page === page }]}
+            aria-current={item.page === page ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="gnav-progress" aria-hidden="true">
+      <span class="gnav-progress-bar" data-progress></span>
+    </div>
+  </div>
+</header>
+
+<style>
+  .gnav {
+    position: sticky;
+    top: 10px;
+    z-index: 50;
+    height: 0;
+    padding: 0 clamp(0.75rem, 3vw, 1.5rem);
+  }
+
+  .gnav-inner {
+    width: 100%;
+    max-width: calc(var(--wrap) - 1rem);
+    height: var(--nav-h);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1.1rem 0 1.25rem;
+    border-radius: 999px;
+    background: var(--glass-bg-strong);
+  }
+
+  .gnav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .gnav-brand:hover {
+    text-decoration: none;
+  }
+
+  .gnav-mark {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle closest-side, #ffffff 0 12%, var(--accent) 14% 42%, transparent 44%),
+      repeating-radial-gradient(circle closest-side, #1d1d1f 0 1.5px, #3a3a3c 2px, #1d1d1f 2.5px);
+    transition: rotate 900ms var(--ease-out);
+  }
+
+  .gnav-brand:hover .gnav-mark {
+    rotate: 180deg;
+  }
+
+  .gnav-menu {
+    display: flex;
+    gap: 0.15rem;
+  }
+
+  .gnav-menu a {
+    position: relative;
+    padding: 0.42rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    opacity: 0.82;
+    transition:
+      opacity 200ms var(--ease),
+      background-color 300ms var(--ease),
+      box-shadow 300ms var(--ease);
+  }
+
+  .gnav-menu a:hover {
+    opacity: 1;
+    text-decoration: none;
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+  }
+
+  .gnav-menu a.is-active {
+    opacity: 1;
+    color: var(--accent);
+    background: var(--glass-bg-strong);
+    box-shadow: var(--glass-rim), 0 0 0 0.5px var(--glass-edge), 0 4px 12px -6px rgba(0, 0, 0, 0.18);
+  }
+
+  .gnav-toggle {
+    display: none;
+  }
+
+  .gnav-progress {
+    position: absolute;
+    left: 1.75rem;
+    right: 1.75rem;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    overflow: visible;
+  }
+
+  .gnav-progress-bar {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: calc(var(--progress, 0) * 100%);
+    border-radius: inherit;
+    background: var(--accent);
+  }
+
+  .gnav-progress-bar::after {
+    content: "";
+    position: absolute;
+    right: -3px;
+    top: -2.5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: calc(var(--progress, 0) * 100);
+  }
+
+  @media (max-width: 760px) {
+    .gnav-toggle {
+      display: inline-grid;
+      place-content: center;
+      gap: 6px;
+      width: 40px;
+      height: 40px;
+      margin-right: -8px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .gnav-toggle span {
+      display: block;
+      width: 17px;
+      height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 300ms var(--ease-out);
+    }
+
+    .gnav.is-open .gnav-toggle span:first-child {
+      transform: translateY(3.75px) rotate(45deg);
+    }
+
+    .gnav.is-open .gnav-toggle span:last-child {
+      transform: translateY(-3.75px) rotate(-45deg);
+    }
+
+    .gnav-menu {
+      position: absolute;
+      top: calc(var(--nav-h) + 8px);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      padding: 0.75rem 0.75rem 1rem;
+      border-radius: 28px;
+      background: var(--glass-bg-strong);
+      -webkit-backdrop-filter: var(--glass-blur);
+      backdrop-filter: var(--glass-blur);
+      box-shadow: var(--glass-rim), 0 0 0 0.5px var(--glass-edge), var(--glass-shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 250ms var(--ease), transform 250ms var(--ease), visibility 250ms;
+    }
+
+    .gnav.is-open .gnav-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    .gnav-menu a {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      padding: 0.5rem 0.9rem;
+      border-radius: 16px;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>("[data-gnav]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-gnav-toggle]");
+  const bar = document.querySelector<HTMLElement>("[data-progress]");
+
+  if (nav && toggle) {
+    const setOpen = (open: boolean) => {
+      nav.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
+    toggle.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+    nav.querySelectorAll(".gnav-menu a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+  }
+
+  const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".gnav-menu a[data-section]"));
+  const sections = sectionLinks
+    .map((link) => document.getElementById(link.dataset.section ?? ""))
+    .filter((el): el is HTMLElement => Boolean(el));
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    if (bar) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      bar.style.setProperty("--progress", progress.toFixed(4));
+    }
+    if (sections.length) {
+      const line = window.innerHeight * 0.45;
+      const current = sections.find((section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= line && rect.bottom > line;
+      });
+      sectionLinks.forEach((link) => {
+        link.classList.toggle("is-active", Boolean(current) && link.dataset.section === current?.id);
+      });
+    }
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", update);
+  update();
+</script>

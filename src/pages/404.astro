@@ -1,0 +1,112 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found | Chu Chen" description="This page does not exist.">
+  <section class="band miss">
+    <div class="wrap miss-inner">
+      <svg class="miss-art" viewBox="0 0 420 240" aria-hidden="true">
+        <line x1="0" y1="212" x2="420" y2="212" class="miss-ground"></line>
+        <g class="miss-net">
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => <line x1={258 + i * 20} y1="72" x2={258 + i * 20} y2="212" />)}
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => <line x1="252" y1={80 + i * 20} x2="390" y2={80 + i * 20} />)}
+        </g>
+        <path d="M252 212 V66 H392 V212" class="miss-frame"></path>
+        <g class="miss-ball">
+          <g class="miss-spin">
+            <circle r="14" class="miss-ball-body"></circle>
+            <path d="M0 -6 L5.7 -1.9 L3.5 4.9 L-3.5 4.9 L-5.7 -1.9 Z" class="miss-ball-patch"></path>
+          </g>
+        </g>
+      </svg>
+      <p class="eyebrow"><span class="side">404</span><span>Off target</span></p>
+      <h1 class="headline">Wide of the post.</h1>
+      <p class="lede">The page you were looking for isn't here. Let's get you back in play.</p>
+      <a class="btn btn--primary" href="/">Back to home</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .miss {
+    min-height: calc(100vh - var(--nav-h) - 120px);
+    display: grid;
+    align-items: center;
+  }
+
+  .miss-inner {
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .miss-art {
+    width: min(420px, 90vw);
+    margin-bottom: 1rem;
+    overflow: visible;
+  }
+
+  .miss-ground {
+    stroke: var(--line);
+    stroke-width: 1.5;
+  }
+
+  .miss-net line {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .miss-frame {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 6;
+    stroke-linejoin: round;
+  }
+
+  .miss-ball-body {
+    fill: #ffffff;
+    stroke: var(--text);
+    stroke-width: 1.5;
+  }
+
+  .miss-ball-patch {
+    fill: var(--text);
+  }
+
+  .miss-ball {
+    animation: shot 3.2s cubic-bezier(0.3, 0, 0.6, 1) infinite;
+  }
+
+  .miss-spin {
+    animation: roll 0.8s linear infinite;
+  }
+
+  @keyframes shot {
+    0% {
+      transform: translate(30px, 198px);
+      opacity: 0;
+    }
+    6% {
+      opacity: 1;
+    }
+    45% {
+      transform: translate(236px, 96px);
+    }
+    75% {
+      transform: translate(150px, 30px);
+      opacity: 1;
+    }
+    92%,
+    100% {
+      transform: translate(90px, 198px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes roll {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+interface Props {
+  variant?: "full" | "court";
+  class?: string;
+}
+
+const { variant = "full", class: className } = Astro.props;
+---
+
+<svg
+  class:list={["field-lines", className]}
+  viewBox="0 0 1200 420"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <g fill="none" stroke="currentColor" stroke-width="1.2">
+    {
+      variant === "full" && (
+        <g>
+          <rect x="-2" y="80" width="170" height="260" />
+          <rect x="-2" y="150" width="60" height="120" />
+          <circle cx="115" cy="210" r="2.5" fill="currentColor" />
+          <path d="M168 157 A75 75 0 0 1 168 263" />
+          <line x1="600" y1="-10" x2="600" y2="430" />
+          <circle cx="600" cy="210" r="90" />
+          <circle cx="600" cy="210" r="3" fill="currentColor" />
+        </g>
+      )
+    }
+    <rect x="1010" y="130" width="192" height="160" />
+    <path d="M1010 150 A60 60 0 0 0 1010 270" />
+    <path d="M1010 150 A60 60 0 0 1 1010 270" stroke-dasharray="6 7" />
+    <path d="M1202 10 L1056.4 10 A220 220 0 0 0 1056.4 410 L1202 410" />
+    <circle cx="1160" cy="210" r="9" />
+    <line x1="1176" y1="182" x2="1176" y2="238" />
+    <path d="M1160 170 A40 40 0 0 0 1160 250" />
+  </g>
+  <g
+    class="field-numbers"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1"
+    font-family="-apple-system, BlinkMacSystemFont, SF Pro Display, Helvetica Neue, sans-serif"
+    font-weight="800"
+    font-size="190"
+    letter-spacing="-8"
+  >
+    {variant === "full" && <text x="260" y="360">10</text>}
+    <text x="830" y="190">35</text>
+  </g>
+</svg>
+
+<style>
+  .field-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--text);
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .field-numbers {
+    opacity: 0.55;
+  }
+</style>

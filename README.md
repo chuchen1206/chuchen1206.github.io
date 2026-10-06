@@ -20,23 +20,27 @@ Open `http://localhost:4321`.
 
 Only update these files for most changes:
 
-- `src/data/profile.ts` - name, title, links, research interests
+- `src/data/profile.ts` - name, title, bio, links, research themes, experience, education
 - `src/data/publications.ts` - journal/conference/preprint/patent list
-- `src/data/service.ts` - organizer/reviewer/teaching/service
-- `src/content/cv.md` - CV narrative
-- `src/content/service.md` - service narrative
+- `src/data/service.ts` - organizer/reviewer/talks/teaching/leadership
+- `src/data/gallery.ts` - photos in the Moments section (photo, pixel size, city, country, year)
+
+The homepage and the CV page are both rendered from these files.
 
 Core page files:
 
-- `src/pages/index.astro`
-- `src/pages/publications.astro`
-- `src/pages/cv.astro`
-- `src/pages/service.astro`
+- `src/pages/index.astro` - long-scroll homepage
+- `src/pages/publications.astro` - filterable publication list
+- `src/pages/cv.astro` - CV
+- `src/pages/service.astro` - redirects to `/#service`
+- `src/pages/404.astro`
+
+Design tokens (colours, type, spacing) live in `src/styles/global.css`; reusable pieces are in `src/components/`.
 
 ## 3) Add a new publication (5 minutes)
 
 1. Edit `src/data/publications.ts`
-2. Add one item with `title/authors/venue/year/category/link`
+2. Add one item with `title/authors/venue/venueShort/year/category/theme/link` (optional `short`, `highlight`)
 3. Commit and push to `main`
 4. GitHub Actions auto-deploys
 

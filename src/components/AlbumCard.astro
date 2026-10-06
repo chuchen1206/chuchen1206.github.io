@@ -1,0 +1,169 @@
+---
+import CoverArt from "./CoverArt.astro";
+import type { Publication } from "../data/publications";
+import type { Palette } from "../data/profile";
+
+interface Props {
+  pub: Publication;
+  palette: Palette;
+  index: number;
+}
+
+const { pub, palette, index } = Astro.props;
+const trackNo = String(index + 1).padStart(2, "0");
+---
+
+<article class="album">
+  <a
+    class="album-art"
+    href={pub.link ?? "/publications"}
+    target={pub.link ? "_blank" : undefined}
+    rel={pub.link ? "noopener noreferrer" : undefined}
+    aria-label={`${pub.title} (${pub.venueShort} ${pub.year})`}
+    style={`--label: ${palette.primary === "#ffffff" ? palette.secondary : palette.primary};`}
+  >
+    <span class="album-disc" aria-hidden="true"></span>
+    <span class="album-sleeve">
+      <CoverArt
+        theme={pub.theme}
+        palette={palette}
+        seed={index + pub.year}
+        label={pub.venueShort}
+        meta={`No.${trackNo} — ${pub.year}`}
+      />
+    </span>
+  </a>
+  <div class="album-body">
+    <p class="album-meta">
+      <span class="mono">{trackNo}</span>
+      <span>{pub.venueShort} {pub.year}</span>
+      {pub.highlight && <span class="pill pill--warm">{pub.highlight}</span>}
+    </p>
+    <h3 class="album-title">
+      {
+        pub.link ? (
+          <a href={pub.link} target="_blank" rel="noopener noreferrer">
+            {pub.title}
+          </a>
+        ) : (
+          pub.title
+        )
+      }
+    </h3>
+    <p class="album-venue">{pub.venue}</p>
+  </div>
+</article>
+
+<style>
+  .album {
+    width: clamp(260px, 28vw, 330px);
+    display: grid;
+    gap: 1.1rem;
+    align-content: start;
+  }
+
+  .album-art {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 0.78;
+  }
+
+  .album-sleeve {
+    position: absolute;
+    inset: 0 auto auto 0;
+    z-index: 1;
+    width: 78%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px var(--line-soft);
+    transition: transform 600ms var(--ease-out);
+  }
+
+  .album-sleeve :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .album-disc {
+    position: absolute;
+    top: 3%;
+    left: 12%;
+    width: 72%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle closest-side, var(--bg) 0 3.5%, transparent 4%),
+      radial-gradient(circle closest-side, var(--label) 0 32%, transparent 32.5%),
+      conic-gradient(
+        from 20deg,
+        transparent 0 8%,
+        rgba(255, 255, 255, 0.12) 13%,
+        transparent 20% 52%,
+        rgba(255, 255, 255, 0.08) 60%,
+        transparent 68%
+      ),
+      repeating-radial-gradient(
+        circle closest-side,
+        var(--vinyl) 0 3px,
+        var(--vinyl-groove) 3.5px,
+        var(--vinyl) 4px
+      ),
+      var(--vinyl);
+    transition: left 700ms var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .album-art:hover .album-disc {
+      left: 27%;
+      animation: spin 4s linear infinite;
+    }
+
+    .album-art:hover .album-sleeve {
+      transform: translateX(-2%);
+    }
+  }
+
+  .album-body {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .album-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .album-meta .mono {
+    color: var(--accent);
+  }
+
+  .album-title {
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.018em;
+  }
+
+  .album-title a {
+    color: var(--text);
+  }
+
+  .album-venue {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  @keyframes spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+</style>

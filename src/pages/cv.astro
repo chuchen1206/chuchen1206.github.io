@@ -1,30 +1,198 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CvContent from "../markdown/cv.md";
+import Icons from "../components/Icons.astro";
+import { profile, type TimelineEntry } from "../data/profile";
+import { service } from "../data/service";
+
+interface Row {
+  period?: string;
+  title: string;
+  subtitle?: string;
+  notes?: string[];
+  href?: string;
+}
+
+const fromTimeline = (e: TimelineEntry): Row => ({
+  period: e.period,
+  title: e.role,
+  subtitle: e.institution,
+  notes: e.detail ? [e.detail] : []
+});
+
+const trailingParen = /\s*\(([^)]+)\)\s*$/;
+const splitParen = (text: string): Row => {
+  const match = text.match(trailingParen);
+  return match ? { title: text.replace(trailingParen, ""), period: match[1] } : { title: text };
+};
+
+const yearOf = (text: string): Row => {
+  const match = text.match(/\b(19|20)\d{2}\b/);
+  return { title: text, period: match?.[0] };
+};
+
+const sections: { title: string; rows: Row[] }[] = [
+  { title: "Education", rows: profile.education.map(fromTimeline) },
+  { title: "Research Experience", rows: profile.experience.map(fromTimeline) },
+  { title: "Affiliations", rows: profile.affiliations.map(fromTimeline) },
+  {
+    title: "Conference Organizer",
+    rows: service.organizer.map((o) => ({ title: o.item, href: o.link }))
+  },
+  { title: "Talks", rows: service.talks.map(yearOf) },
+  { title: "Reviewer", rows: service.reviewer.map((title) => ({ title })) },
+  {
+    title: "Professional Service",
+    rows: service.professional.map((p) => ({ period: p.period, title: p.role, subtitle: p.org }))
+  },
+  { title: "Teaching Assistant", rows: service.teaching.map(splitParen) }
+];
 ---
 
 <BaseLayout
   title="CV | Chu Chen"
-  description="Curriculum Vitae of Chu Chen."
+  description="Curriculum vitae of Chu Chen: education, research experience, service and teaching."
   canonical="https://chuchen1206.github.io/cv"
+  page="cv"
 >
-  <section class="hero hero-grid">
-    <div>
-      <h1>Curriculum Vitae</h1>
-      <p class="muted"></p>
-      <!-- <p><a href="/files/CV.pdf">Download full CV (PDF)</a></p> -->
-      <div class="info-bar">
-        <span class="chip">Education</span>
-        <span class="chip">Research</span>
-        <span class="chip">Affliations</span>
+  <section class="band cv-hero">
+    <div class="wrap wrap-narrow">
+      <p class="eyebrow" data-reveal><span class="side">Liner notes</span><span>Curriculum Vitae</span></p>
+      <h1 class="display" data-reveal style="--reveal-delay: 80ms">{profile.name}<span class="dot">.</span></h1>
+      <p class="lede" data-reveal style="--reveal-delay: 160ms">
+        {profile.title}, {profile.subtitle}
+      </p>
+      <div class="cv-contact" data-reveal style="--reveal-delay: 220ms">
+        <a class="btn btn--ghost" href={`mailto:${profile.emails[0]}`}>
+          <Icons name="mail" />
+          {profile.emails[0]}
+        </a>
+        <a class="more" href="/publications">Publications</a>
+        <!-- <a class="more" href="/files/CV.pdf">Download PDF</a> -->
       </div>
-    </div>
-    <div class="hero-visual">
-      <img src="/images/converted/jpg/me_atHK.jpg" alt="CV visual placeholder" />
     </div>
   </section>
 
-  <article class="card section">
-    <CvContent />
-  </article>
+  <section class="band cv-body">
+    <div class="wrap wrap-narrow">
+      {
+        sections.map((section) => (
+          <section class="cv-section" data-reveal>
+            <h2 class="cv-section-title">{section.title}</h2>
+            <ol class="cv-rows">
+              {section.rows.map((row) => (
+                <li class="cv-row">
+                  <span class="cv-period mono">{row.period ?? ""}</span>
+                  <div class="cv-content">
+                    <p class="cv-title">
+                      {row.href ? (
+                        <a href={row.href} target="_blank" rel="noopener noreferrer">
+                          {row.title}
+                        </a>
+                      ) : (
+                        row.title
+                      )}
+                    </p>
+                    {row.subtitle && <p class="cv-subtitle">{row.subtitle}</p>}
+                    {row.notes?.map((note) => (
+                      <p class="muted">{note}</p>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))
+      }
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .cv-hero {
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .cv-hero .wrap {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .dot {
+    color: var(--accent);
+  }
+
+  .cv-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .cv-body {
+    padding-top: 0;
+  }
+
+  .cv-section {
+    padding: 2.25rem 0 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .cv-section-title {
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .cv-rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cv-row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.25rem 2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .cv-period {
+    padding-top: 0.15rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .cv-content {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .cv-title {
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.3;
+  }
+
+  .cv-subtitle {
+    font-size: 1rem;
+  }
+
+  .cv-content .muted {
+    font-size: 0.94rem;
+  }
+
+  @media (max-width: 640px) {
+    .cv-row {
+      grid-template-columns: 1fr;
+    }
+
+    .cv-period:empty {
+      display: none;
+    }
+  }
+</style>
