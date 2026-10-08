@@ -27,7 +27,7 @@ jobs:
       - name: Check the site still builds
         run: npm run build
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: auto/publication-sync
           delete-branch: true
