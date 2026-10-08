@@ -1,0 +1,155 @@
+[
+  {
+    "id": "doi:10.1016/j.neucom.2026.134277",
+    "aliases": [
+      "doi:10.1016/j.neucom.2026.134277",
+      "title:circularquasiconformaldeturbulencegeometrybasedrestorationfrommultipleturbulentframes"
+    ],
+    "title": "Circular quasiconformal deturbulence: Geometry-based restoration from multiple turbulent frames",
+    "authors": "Chu Chen; Han Zhang; Lok Ming Lui",
+    "venue": "Neurocomputing",
+    "venueShort": "NEUCOM",
+    "year": 2026,
+    "category": "journal",
+    "theme": "geometry",
+    "link": "https://doi.org/10.1016/j.neucom.2026.134277"
+  },
+  {
+    "id": "doi:10.3390/jmse14040351",
+    "aliases": [
+      "doi:10.3390/jmse14040351",
+      "title:seafnetasustainableandlightweightattentionenhanceddetectionnetworkforunderwaterfishspeciesrecognition"
+    ],
+    "title": "SEAF-Net: A Sustainable and Lightweight Attention-Enhanced Detection Network for Underwater Fish Species Recognition",
+    "authors": "Yu-Shan Han; Sheng-Lun Zhao; Chu Chen; Kangning Cui; Pingfan Hu; Rui-Feng Wang",
+    "venue": "Journal of Marine Science and Engineering",
+    "venueShort": "JMSE",
+    "year": 2026,
+    "category": "journal",
+    "theme": "geometry",
+    "link": "https://doi.org/10.3390/jmse14040351"
+  },
+  {
+    "id": "doi:10.1109/icassp55912.2026.11460905",
+    "aliases": [
+      "doi:10.1109/icassp55912.2026.11460905",
+      "arxiv:2509.13863",
+      "title:lamigausspitchingradiativegaussianforsparseviewxraylaminographyreconstruction"
+    ],
+    "title": "LamiGauss: Pitching Radiative Gaussian for Sparse-View X-ray Laminography Reconstruction",
+    "authors": "Chu Chen; Ander Biguri; Jean-Michel Morel; Raymond H. Chan; Carola-Bibiane Schönlieb; Jizhou Li",
+    "venue": "IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+    "venueShort": "ICASSP",
+    "year": 2026,
+    "category": "conference",
+    "theme": "imaging",
+    "link": "https://doi.org/10.1109/ICASSP55912.2026.11460905"
+  },
+  {
+    "id": "arxiv:2602.01303",
+    "aliases": [
+      "arxiv:2602.01303",
+      "title:redistoryregiondisentangleddiffusionforconsistentvisualstorygeneration"
+    ],
+    "title": "ReDiStory: Region-Disentangled Diffusion for Consistent Visual Story Generation",
+    "authors": "Ayushman Sarkar; Zhenyu Yu; Chu Chen; Wei Tang; Kangning Cui; Mohd Yamani Idna Idris",
+    "venue": "arXiv:2602.01303",
+    "venueShort": "arXiv",
+    "year": 2026,
+    "category": "preprint",
+    "theme": "geometry",
+    "link": "https://arxiv.org/abs/2602.01303"
+  },
+  {
+    "id": "arxiv:2602.01305",
+    "aliases": [
+      "arxiv:2602.01305",
+      "title:storystateagentbasedstatecontrolforconsistentandeditablestorybooks"
+    ],
+    "title": "StoryState: Agent-Based State Control for Consistent and Editable Storybooks",
+    "authors": "Ayushman Sarkar; Zhenyu Yu; Wei Tang; Chu Chen; Kangning Cui; Mohd Yamani Idna Idris",
+    "venue": "arXiv:2602.01305",
+    "venueShort": "arXiv",
+    "year": 2026,
+    "category": "preprint",
+    "theme": "geometry",
+    "link": "https://arxiv.org/abs/2602.01305"
+  },
+  {
+    "id": "doi:10.1109/tbme.2025.3574238",
+    "aliases": [
+      "doi:10.1109/tbme.2025.3574238",
+      "title:highqualitycestmappingwithlorentzianmodelinformedneuralrepresentation"
+    ],
+    "title": "High-Quality CEST Mapping With Lorentzian-Model Informed Neural Representation",
+    "authors": "Chu Chen; Yang Liu; Se Weon Park; Jizhou Li; Kannie W. Y. Chan; Jianpan Huang; Jean-Michel Morel; Raymond H. Chan",
+    "venue": "IEEE Transactions on Biomedical Engineering",
+    "venueShort": "TBME",
+    "year": 2025,
+    "category": "journal",
+    "theme": "imaging",
+    "link": "https://doi.org/10.1109/TBME.2025.3574238"
+  },
+  {
+    "id": "doi:10.1007/978-3-032-04947-6_8",
+    "aliases": [
+      "doi:10.1007/978-3-032-04947-6_8",
+      "arxiv:2505.13915",
+      "title:blindrestorationofhighresolutionultrasoundvideo"
+    ],
+    "title": "Blind Restoration of High-Resolution Ultrasound Video",
+    "authors": "Chu Chen; Kangning Cui; Pasquale Cascarano; Wei Tang; Elena Loli Piccolomini; Raymond H. Chan",
+    "venue": "Medical Image Computing and Computer Assisted Intervention (MICCAI)",
+    "venueShort": "MICCAI",
+    "year": 2025,
+    "category": "conference",
+    "theme": "imaging",
+    "link": "https://doi.org/10.1007/978-3-032-04947-6_8"
+  },
+  {
+    "id": "arxiv:2511.20081",
+    "aliases": [
+      "arxiv:2511.20081",
+      "title:blindadaptivelocaldenoisingforcestimaging"
+    ],
+    "title": "Blind Adaptive Local Denoising for CEST Imaging",
+    "authors": "Chu Chen; Aitor Artola; Yang Liu; Se Weon Park; Raymond H. Chan; Jean-Michel Morel; Kannie W. Y. Chan",
+    "venue": "arXiv:2511.20081",
+    "venueShort": "arXiv",
+    "year": 2025,
+    "category": "preprint",
+    "theme": "imaging",
+    "link": "https://arxiv.org/abs/2511.20081"
+  },
+  {
+    "id": "doi:10.1109/isbi56570.2024.10635440",
+    "aliases": [
+      "doi:10.1109/isbi56570.2024.10635440",
+      "arxiv:2407.06614",
+      "title:implicitregressioninsubspaceforhighsensitivitycestimaging"
+    ],
+    "title": "Implicit Regression in Subspace for High-Sensitivity CEST Imaging",
+    "authors": "Chu Chen; Yang Liu; Se Weon Park; Jizhou Li; Kannie W. Y. Chan; Raymond H. F. Chan",
+    "venue": "IEEE International Symposium on Biomedical Imaging (ISBI)",
+    "venueShort": "ISBI",
+    "year": 2024,
+    "category": "conference",
+    "theme": "imaging",
+    "link": "https://doi.org/10.1109/ISBI56570.2024.10635440"
+  },
+  {
+    "id": "arxiv:2305.05991",
+    "aliases": [
+      "arxiv:2305.05991",
+      "title:dmnrunsuperviseddenoisingofpointcloudscorruptedbyairborneparticles"
+    ],
+    "title": "DMNR: Unsupervised De-noising of Point Clouds Corrupted by Airborne Particles",
+    "authors": "Chu Chen; Yanqi Ma; Bingcheng Dong; Junjie Cao",
+    "venue": "arXiv:2305.05991",
+    "venueShort": "arXiv",
+    "year": 2023,
+    "category": "preprint",
+    "theme": "geometry",
+    "link": "https://arxiv.org/abs/2305.05991"
+  }
+]

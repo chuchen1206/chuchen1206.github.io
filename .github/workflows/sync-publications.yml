@@ -1,0 +1,38 @@
+name: Sync publications
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Fetch publications
+        run: node scripts/sync-publications.mjs --summary "$RUNNER_TEMP/pub-sync.md"
+      - name: Check the site still builds
+        run: npm run build
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: auto/publication-sync
+          delete-branch: true
+          add-paths: src/data/publications.auto.json
+          commit-message: "Sync publications"
+          title: "Publication sync"
+          body-path: ${{ runner.temp }}/pub-sync.md
+          labels: publications

@@ -4,11 +4,11 @@
 
 ### A. New paper accepted
 
-1. Add a new entry in `src/data/publications.ts`
-2. Set category: `journal` or `conference` or `preprint`
-3. Add DOI/arXiv link
-4. Commit message: `update publication list`
-5. Push to `main`
+1. Make sure the paper is on ORCID (or Semantic Scholar / arXiv)
+2. Wait for the weekly `Publication sync` pull request, or run the `Sync publications` workflow by hand, or run `npm run sync:pubs` locally
+3. Check the new entry; fix anything wrong (short name, theme, link, author spelling, `hidden: true`) in `overrides` in `src/data/publications.ts`
+4. Merge the pull request (or commit and push to `main`)
+5. Papers the sources cannot find (e.g. patents) go in `manual` in the same file
 
 ### B. Position or service update
 
