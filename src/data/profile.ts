@@ -138,8 +138,8 @@ export const profile: Profile = {
   affiliations: [
     {
       period: "Aug 2022 – Jul 2026",
-      role: "Hong Kong Centre for Cerebro-cardiovascular Health Engineering",
-      institution: "Hong Kong",
+      role: "",
+      institution: "Hong Kong Centre for Cerebro-cardiovascular Health Engineering",
       logo: "/images/logos/coche.png",
       logoAlt: "COCHE logo"
     }

@@ -14,8 +14,8 @@ interface Row {
 
 const fromTimeline = (e: TimelineEntry): Row => ({
   period: e.period,
-  title: e.role,
-  subtitle: e.institution,
+  title: e.role || e.institution,
+  subtitle: e.role ? e.institution : undefined,
   notes: e.detail ? [e.detail] : []
 });
 

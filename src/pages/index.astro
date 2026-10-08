@@ -261,7 +261,8 @@ const personJsonLd = {
                   </span>
                   <div class="timeline-body">
                     <p class="timeline-kind">Also affiliated with</p>
-                    <h4 class="affiliation-name">{a.role}</h4>
+                    <h4 class="affiliation-name">{a.institution}</h4>
+                    {a.role && <p class="muted">{a.role}</p>}
                     {a.detail && <p class="muted">{a.detail}</p>}
                   </div>
                 </div>
