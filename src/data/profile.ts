@@ -114,7 +114,7 @@ export const profile: Profile = {
       period: "May 2025 – Nov 2025",
       role: "Visiting Ph.D. Student",
       institution: "DAMTP, University of Cambridge",
-      // detail: "Department of Applied Mathematics and Theoretical Physics",
+      detail: "Cambridge Image Analysis Group",
       logo: "/images/logos/cambridge-shield.png",
       logoAlt: "University of Cambridge logo"
     }
