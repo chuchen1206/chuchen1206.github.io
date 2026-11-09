@@ -46,6 +46,21 @@
     "link": "https://doi.org/10.1109/ICASSP55912.2026.11460905"
   },
   {
+    "id": "arxiv:2611.05206",
+    "aliases": [
+      "arxiv:2611.05206",
+      "title:diffusionpluginpriorsforselfsupervisedultrasoundvideorestoration"
+    ],
+    "title": "Diffusion Plug-in Priors for Self-Supervised Ultrasound Video Restoration",
+    "authors": "Chu Chen; Mingduo He; Yining Li; Yinhao Wu; Wei Tang; Yiwen Luo; Yixuan Chen; Pasquale Cascarano; Kangning Cui",
+    "venue": "arXiv:2611.05206",
+    "venueShort": "arXiv",
+    "year": 2026,
+    "category": "preprint",
+    "theme": "imaging",
+    "link": "https://arxiv.org/abs/2611.05206"
+  },
+  {
     "id": "arxiv:2602.01303",
     "aliases": [
       "arxiv:2602.01303",
