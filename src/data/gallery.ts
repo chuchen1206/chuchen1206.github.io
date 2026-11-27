@@ -12,6 +12,28 @@ export interface Moment {
 
 export const moments: Moment[] = [
   {
+    src: "/images/web/cityu-graduation.jpg",
+    alt: "PhD graduation at City University of Hong Kong",
+    caption: "PhD graduation, City University of Hong Kong",
+    city: "Hong Kong",
+    country: "China",
+    countryCode: "HK",
+    year: 2026,
+    width: 1400,
+    height: 933
+  },
+  {
+    src: "/images/web/cityu-viva.jpg",
+    alt: "PhD viva at City University of Hong Kong",
+    caption: "PhD viva, City University of Hong Kong",
+    city: "Hong Kong",
+    country: "China",
+    countryCode: "HK",
+    year: 2026,
+    width: 1400,
+    height: 1050
+  },
+  {
     src: "/images/web/marseille.jpg",
     alt: "Talk in Marseille",
     caption: "Mathematics of Imaging: Trends and Perspectives",
